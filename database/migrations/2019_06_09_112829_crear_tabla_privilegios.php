@@ -15,7 +15,7 @@ class CrearTablaPrivilegios extends Migration
     {
         Schema::create('privilegios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
+            $table->string('ruta');
         });
     }
 

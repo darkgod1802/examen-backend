@@ -18,7 +18,9 @@ class CrearTablaUsuarios extends Migration
             $table->string('nombres');
             $table->string('apellidos');
             $table->string('correo');
-            $table->string('password');
+            $table->string('contraseña');
+            $table->bigInteger('rol_id')->unsigned();
+            $table->foreign('rol_id')->references('id')->on('roles');
             $table->timestamps();
             $table->softDeletes();
         });
