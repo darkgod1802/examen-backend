@@ -20,9 +20,9 @@ class VerificarConexionBD
             DB::connection()->getPdo();
         } catch (\Exception $e) {
             return response()->json([ 'error' => [
-                'http_code' => '503',
-                'message' => "No se pudo conectar con la base de datos, es posible que la base de datos se encuentre fuera de servicio",
-            ]
+                    'http_code' => '503',
+                    'mensaje' => "No se pudo conectar con la base de datos, es posible que la base de datos se encuentre fuera de servicio",
+                ]
             ],503);
         }
         return $next($request);

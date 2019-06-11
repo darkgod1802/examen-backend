@@ -13,11 +13,11 @@ class PrivilegiosSeeder extends Seeder
     public function run()
     {
         DB::table('privilegios')->insert(array(
-            ['ruta' => 'AnunciosControlador@crear'],
-            ['ruta' => 'AnunciosControlador@eliminar'],
-            ['ruta' => 'AnunciosControlador@modificar'],
-            ['ruta' => 'AnunciosControlador@leer'],
-            ['ruta' => 'AnunciosControlador@listar'],
+            ['ruta' => 'AnuncioControlador@crear'],
+            ['ruta' => 'AnuncioControlador@eliminar'],
+            ['ruta' => 'AnuncioControlador@modificar'],
+            ['ruta' => 'AnuncioControlador@leer'],
+            ['ruta' => 'AnuncioControlador@listar'],
         ));
         $this->command->info('Tabla rellenada correctamente');
     }

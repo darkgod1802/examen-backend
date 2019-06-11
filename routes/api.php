@@ -23,9 +23,9 @@ Route::post('/inicio_sesion', 'UsuarioControlador@iniciarSesion');
 
 //Anuncios
 Route::middleware(['connected.bd'])->group(function () {
-    Route::post('/anuncios', 'AnunciosControlador@crear');
-    Route::get('/anuncios/{id}', 'AnunciosControlador@leer');
-    Route::put('/anuncios/{id}', 'AnunciosControlador@actualizar');
-    Route::delete('/anuncios/{id}', 'AnunciosControlador@eliminar');
-    Route::get('/anuncios', 'AnunciosControlador@listar');
+    Route::post('/anuncios', 'AnuncioControlador@crear');
+    Route::get('/anuncios/{id}', 'AnuncioControlador@leer');
+    Route::put('/anuncios/{id}', 'AnuncioControlador@actualizar');
+    Route::delete('/anuncios/{id}', 'AnuncioControlador@eliminar');
+    Route::get('/anuncios', 'AnuncioControlador@listar');
 });
