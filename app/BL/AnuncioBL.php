@@ -15,7 +15,7 @@ class AnuncioBL
             'clave'     =>'',
             'tipo'      =>'id',
             'orden'     =>'desc',
-            'cantidad'   => 5
+            'cantidad'  => 5
         ];
         $campos = ['clave', 'orden', 'tipo'];
         foreach($campos as $campo){

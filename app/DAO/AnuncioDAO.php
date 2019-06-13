@@ -24,16 +24,16 @@ class AnuncioDAO
         $anuncio->save();
         return $anuncio;
     }
-    public function obtenerAnuncio(int $id){
+    public function obtenerAnuncio($id){
         $anuncio=Anuncio::find($id);
         return $anuncio;
     }
-    public function existeAnuncio(int $id){
+    public function existeAnuncio($id){
         if(Anuncio::where('id','=',$id)->where('deleted_at','=',null)->exists())
             return true;
         return false;
     }
-    public function eliminarAnuncio(int $id){
+    public function eliminarAnuncio($id){
         $anuncio=Anuncio::find($id);
         $anuncio->deleted_at=date("Y-m-d H:i:s");
         $anuncio->save();
