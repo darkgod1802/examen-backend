@@ -15,10 +15,11 @@ class AnuncioBL
             'clave'     =>'',
             'tipo'      =>'id',
             'orden'     =>'desc',
-            'cantidad'  => 5
+            'cantidad'  => 10
         ];
         $campos = ['clave', 'orden', 'tipo'];
         foreach($campos as $campo){
+            Log::info("aqui");
             if(!empty($datos[$campo])){
                 $parametros[$campo]=$datos[$campo];
             }

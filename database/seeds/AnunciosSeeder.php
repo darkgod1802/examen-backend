@@ -16,7 +16,7 @@ class AnunciosSeeder extends Seeder
         $faker = Faker::create();
         for($i=1 ; $i <= 10 ; $i++){
             DB::table('anuncios')->insert(array(
-                'titulo' => $faker->sentence(2),
+                'titulo' => $faker->companySuffix,
                 'descripcion' => $faker->sentence(20),
                 'fecha'=> date($format = 'Y-m-d'),
                 'hora'=> $faker->time($format = 'H:i:s'),

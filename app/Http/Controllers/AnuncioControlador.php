@@ -34,7 +34,7 @@ class AnuncioControlador extends Controller
     }
     public function listar(Request $request){
         $validador = Validator::make($request->all(),[
-            'tipo'          => [ Rule::in('id','fecha')],
+            'tipo'          => [ Rule::in('id','fecha','titulo')],
             'orden'         => [ Rule::in('asc','desc')],
             'cantidad'      => 'int',
         ]);
@@ -44,7 +44,7 @@ class AnuncioControlador extends Controller
             return $e->errorArgumentosInvalidos('No se pudo actualizar el anuncio, alguno de los '.
                 'argumentos es inválido',$errores);
         }
-        $datos=$request->json()->all();
+        $datos=$request->query->all();
         $abl=new AnuncioBL();
         return $abl->listarAnuncios($datos);
     }

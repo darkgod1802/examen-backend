@@ -14,7 +14,7 @@ class AnuncioDAO
             ->where('anuncios.titulo','LIKE','%'.$parametros['clave'].'%')
             ->orWhere('anuncios.descripcion','LIKE','%'.$parametros['clave'].'%')
             ->select('anuncios.id','anuncios.titulo','anuncios.descripcion','anuncios.fecha','anuncios.hora',
-                        'usuarios.nombres','usuarios.apellidos','usuarios.correo')
+                        'anuncios.created_at','usuarios.nombres','usuarios.apellidos','usuarios.correo')
             ->orderBy('anuncios.'.$parametros['tipo'], $parametros['orden'])
             ->paginate($parametros['cantidad']);
 

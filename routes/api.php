@@ -22,10 +22,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/inicio_sesion', 'UsuarioControlador@iniciarSesion')->middleware('connected.bd');
 
 //Anuncios
-Route::middleware(['connected.bd','jwt.verify'])->group(function () {
+//Route::middleware(['connected.bd','jwt.verify'])->group(function () {
     Route::post('/anuncios', 'AnuncioControlador@crear');
     Route::get('/anuncios/{id}', 'AnuncioControlador@leer');
     Route::put('/anuncios/{id}', 'AnuncioControlador@actualizar');
     Route::delete('/anuncios/{id}', 'AnuncioControlador@eliminar');
     Route::get('/anuncios', 'AnuncioControlador@listar');
-});
+//});
