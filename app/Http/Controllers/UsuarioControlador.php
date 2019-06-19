@@ -6,13 +6,16 @@ use Examen\BL\UsuarioBL;
 use Examen\Helpers\Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
+use Tymon\JWTAuth\JWTAuth;
 
 class UsuarioControlador extends Controller
 {
     public function iniciarSesion(Request $request){
         $validador = Validator::make($request->all(),[
             'correo'        => 'required|email',
-            'contraseña'    => 'required',
+            'contra'        => 'required',
         ]);
         if($validador->fails()){
             $errores = $validador->errors();
@@ -23,5 +26,17 @@ class UsuarioControlador extends Controller
         $datos = $request->json()->all();
         $ubl=new UsuarioBL();
         return $ubl->ingresar($datos);
+    }
+    public function renovarToken(Request $request){
+        $error=new Error();
+        try {
+            $token = \Tymon\JWTAuth\Facades\JWTAuth::parseToken()->refresh();
+            return response()->json(compact('token'));
+        }
+        catch (TokenBlacklistedException $e){
+            return $error->errorNoAutorizado("Token expirado");
+        } catch (JWTException $e) {
+            return $error->errorNoAutorizado("Token expirado");
+        }
     }
 }

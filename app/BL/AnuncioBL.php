@@ -7,7 +7,6 @@ use Examen\DAO\AnuncioDAO;
 use Examen\Helpers\Error;
 use Examen\Modelos\Anuncio;
 use Illuminate\Support\Facades\Log;
-
 class AnuncioBL
 {
     public function listarAnuncios($datos){
@@ -28,19 +27,13 @@ class AnuncioBL
         $anuncios=$adao->obtenerAnuncios($parametros);
         return response()->json($anuncios);
     }
-//    public function listarAnuncios(){
-//        $cant=5;
-//        $adao=new AnuncioDAO();
-//        $anuncios=$adao->obtenerAnuncios($cant);
-//        return response()->json($anuncios);
-//    }
-    public function crearAnuncio($datos){
+    public function crearAnuncio($datos,$usuario_id){
         $anuncio=new Anuncio();
         $anuncio->titulo=$datos['titulo'];
         $anuncio->descripcion=$datos['descripcion'];
         $anuncio->fecha=$datos['fecha'];
         $anuncio->hora=$datos['hora'];
-        $anuncio->usuario_id=$datos['usuario_id'];
+        $anuncio->usuario_id=$usuario_id;
         $adao=new AnuncioDAO();
         $anuncio=$adao->guardarAnuncio($anuncio);
         return response()->json($anuncio,201);

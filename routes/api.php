@@ -20,12 +20,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Inicio de sesión
 Route::post('/inicio_sesion', 'UsuarioControlador@iniciarSesion')->middleware('connected.bd');
+Route::get('/token', 'UsuarioControlador@renovarToken')->middleware('connected.bd');
 
 //Anuncios
-//Route::middleware(['connected.bd','jwt.verify'])->group(function () {
+Route::middleware(['connected.bd','jwt.verify'])->group(function () {
     Route::post('/anuncios', 'AnuncioControlador@crear');
     Route::get('/anuncios/{id}', 'AnuncioControlador@leer');
-    Route::put('/anuncios/{id}', 'AnuncioControlador@actualizar');
+    Route::put('/anuncios/{id}', 'AnuncioControlador@modificar');
     Route::delete('/anuncios/{id}', 'AnuncioControlador@eliminar');
     Route::get('/anuncios', 'AnuncioControlador@listar');
-//});
+});

@@ -5,18 +5,21 @@ namespace Examen\Http\Controllers;
 use Examen\BL\AnuncioBL;
 use Examen\Helpers\Error;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AnuncioControlador extends Controller
 {
     public function crear(Request $request){
         $validador = Validator::make($request->all(),[
-            'titulo'        => 'required|max:40',
+            'titulo'        => 'required|max:20',
             'descripcion'   => 'required|max:400',
-            'fecha'         => 'required|date_format:Y-m-d|after:now',
+            'fecha'         => 'required|date_format:Y-m-d',
             'hora'          => 'required|date_format:H:i',
-            'usuario_id'    => 'required|integer|exists:usuarios,id',
         ]);
         if($validador->fails()){
             $errores = $validador->errors();
@@ -25,14 +28,18 @@ class AnuncioControlador extends Controller
             'argumentos es inválido',$errores);
         }
         $datos=$request->json()->all();
+        $token=JWTAuth::parseToken();
+        $usuario_id=$token->getPayload()->get('sub');
+
         $abl=new AnuncioBL();
-        return $abl->crearAnuncio($datos);
+        return $abl->crearAnuncio($datos,$usuario_id);
     }
     public function leer(Request $request,$id){
         $abl=new AnuncioBL();
         return $abl->leerAnuncio($id);
     }
     public function listar(Request $request){
+        Log::error("tenemos un error");
         $validador = Validator::make($request->all(),[
             'tipo'          => [ Rule::in('id','fecha','titulo')],
             'orden'         => [ Rule::in('asc','desc')],
@@ -52,11 +59,11 @@ class AnuncioControlador extends Controller
         $abl=new AnuncioBL();
         return $abl->eliminarAnuncio($id);
     }
-    public function actualizar(Request $request,$id){
+    public function modificar(Request $request,$id){
         $validador = Validator::make($request->all(),[
-            'titulo'        => 'max:40',
+            'titulo'        => 'max:20',
             'descripcion'   => 'max:400',
-            'fecha'         => 'date_format:Y-m-d|after:now',
+            'fecha'         => 'date_format:Y-m-d',
             'hora'          => 'date_format:H:i',
         ]);
         if($validador->fails()){

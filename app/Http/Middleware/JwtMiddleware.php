@@ -7,6 +7,7 @@ use Examen\BL\UsuarioBL;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\TokenBlacklistedException;
 
 class JwtMiddleware
 {
@@ -29,16 +30,7 @@ class JwtMiddleware
             if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
                 return $this->errorNoAutorizado("Token invalido");
             }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
-                try {
-                    $refreshed = JWTAuth::parseToken()->refresh();
-                    Log::info($refreshed);
-                    $request->headers->set('Authorization', 'Bearer ' . $refreshed);
-                    Log::info('Token refrescado');
-                    $this->handle($request,$next);
-                }
-                catch (JWTException $e) {
-                    return $this->errorNoAutorizado("Token expirado");
-                }
+                return $this->errorNoAutorizado("Token expirado");
             }else{
                 return $this->errorNoAutorizado("Token de autorización no encontrado");
             }
@@ -57,7 +49,7 @@ class JwtMiddleware
     public function errorNoAutorizado($message = 'No se encuentra autorizado'){
         return response()->json([ 'error' => [
             'http_code' => '401',
-            'message' => $message,
+            'mensaje' => $message,
         ]
         ],401);
     }
